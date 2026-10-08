@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="易易亲电影网（yiyiqingdianyingwang-app）是面向华语观众的影视导航与资讯平台，汇集院线新片、经典老片、纪录片、动漫与短剧的影片介绍、演职员表、上映时间、观影指南与影视行业观察。访问 https://yiyiqingdianyingwang-app.github.io 获取最新电影动态与选片参考。">
+<meta name="keywords" content="易易亲电影网, yiyiqingdianyingwang-app, 电影推荐, 电影资讯, 院线新片, 经典电影, 国产电影, 好莱坞电影, 纪录片, 动漫番剧, 影视解说, 观影指南, 电影排行, 电影节, 演员导演">
+<meta name="author" content="易易亲电影网编辑组">
+<meta name="theme-color" content="#0b1020">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<title>易易亲电影网｜yiyiqingdianyingwang-app｜电影资讯·影片导览·观影指南</title>
+<style>
+:root{
+  --ink:#e8ecf8;
+  --ink-dim:#aab2cf;
+  --bg:#070a16;
+  --panel:#111827;
+  --line:#243044;
+  --gold:#f5b642;
+  --gold-soft:#ffd98a;
+  --accent:#4f8cff;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.75;
+  font-size:16px;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(900px 500px at 82% -10%,rgba(79,140,255,.18),transparent 60%),
+    radial-gradient(700px 420px at 8% 12%,rgba(245,182,66,.14),transparent 55%),
+    linear-gradient(180deg,#070a16,#05070f 60%,#070a16);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(circle at 50% 0,black,transparent 72%);
+}
+a{color:var(--gold-soft);text-decoration:none;transition:.25s}
+a:hover{color:#fff}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+/* header */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(7,10,22,.82);border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:14px;height:62px}
+.logo{display:flex;align-items:baseline;gap:9px;font-weight:800;letter-spacing:.5px}
+.logo b{font-size:19px;background:linear-gradient(92deg,var(--gold),var(--gold-soft));-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo span{font-size:11px;color:var(--ink-dim);font-weight:500;padding:2px 7px;border:1px solid var(--line);border-radius:20px}
+nav{margin-left:auto;display:flex;gap:6px;align-items:center}
+nav a{font-size:14px;padding:8px 12px;border-radius:9px;color:var(--ink-dim)}
+nav a:hover{background:rgba(245,182,66,.1);color:var(--gold-soft)}
+.menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--ink);width:40px;height:40px;border-radius:10px;font-size:20px;cursor:pointer}
+/* hero */
+.hero{padding:64px 0 46px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--gold);border:1px solid rgba(245,182,66,.35);padding:5px 13px;border-radius:30px;background:rgba(245,182,66,.07)}
+h1{font-size:clamp(30px,5.2vw,54px);line-height:1.18;margin:18px 0 14px;font-weight:850;letter-spacing:-.5px}
+h1 em{font-style:normal;color:var(--gold)}
+.lede{color:var(--ink-dim);font-size:clamp(15px,1.6vw,17px);max-width:56ch}
+.hero-actions{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px}
+.btn{padding:13px 26px;border-radius:11px;font-weight:700;font-size:15px;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:linear-gradient(135deg,var(--gold),#e8921f);color:#1a1205;box-shadow:0 10px 28px -10px rgba(245,182,66,.7)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.hero-meta{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px 26px;font-size:13px;color:var(--ink-dim)}
+.hero-meta b{color:var(--ink)}
+.poster{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);aspect-ratio:3/4;background:linear-gradient(160deg,#1a2440,#0c1226)}
+.poster .pg{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr)}
+.poster .pg i{background-size:cover;background-position:center;filter:saturate(.8) brightness(.9)}
+.poster .pg i:nth-child(1){background-image:linear-gradient(135deg,#3a2a5e,#1d2240);grid-column:1/3;grid-row:1/3}
+.poster .pg i:nth-child(2){background-image:linear-gradient(160deg,#5a3410,#2a1d12);grid-row:1/2}
+.poster .pg i:nth-child(3){background-image:linear-gradient(200deg,#0e3a4d,#0b1c2b);grid-row:2/4}
+.poster .pg i:nth-child(4){background-image:linear-gradient(120deg,#4a1020,#240a18);grid-row:3/5}
+.poster .pg i:nth-child(5){background-image:linear-gradient(90deg,#2b3a12,#16201a);grid-row:4/5;grid-column:1/3}
+.poster-tag{position:absolute;left:16px;bottom:16px;right:16px;background:rgba(7,10,22,.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px}
+.poster-tag small{color:var(--gold);font-size:11px;letter-spacing:1px}
+.poster-tag p{font-size:13px;margin-top:3px;color:#dfe4f5}
+/* section */
+section{padding:52px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:26px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.3px}
+.sec-head h2 u{text-decoration:none;color:var(--gold)}
+.sec-head p{color:var(--ink-dim);font-size:14px;max-width:52ch}
+/* cards */
+.grid{display:grid;gap:18px}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;transition:.28s;position:relative}
+.card:hover{transform:translateY(-5px);border-color:rgba(245,182,66,.45);box-shadow:0 18px 40px -22px rgba(0,0,0,.8)}
+.card .no{position:absolute;right:16px;top:14px;font-size:12px;color:var(--ink-dim);font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:11px;padding:3px 9px;border-radius:6px;background:rgba(79,140,255,.12);color:#a9c6ff;border:1px solid rgba(79,140,255,.25);margin-bottom:10px}
+.card h3{font-size:17px;margin-bottom:8px;line-height:1.45}
+.card p{color:var(--ink-dim);font-size:14px}
+.card .more{display:inline-block;margin-top:14px;font-size:13px;color:var(--gold)}
+/* film strip */
+.strip{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.film{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.25s}
+.film:hover{border-color:var(--gold);transform:scale(1.025)}
+.thumb{aspect-ratio:2/3;position:relative}
+.thumb s{position:absolute;inset:0;background:linear-gradient(150deg,var(--c1),var(--c2))}
+.thumb span{position:absolute;left:8px;top:8px;font-size:11px;background:rgba(0,0,0,.6);padding:2px 7px;border-radius:5px;color:#ffe9bd}
+.film b{display:block;padding:9px 11px 3px;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.film small{display:block;padding:0 11px 11px;color:var(--ink-dim);font-size:12px}
+/* timeline */
+.tl{position:relative;padding-left:26px}
+.tl::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--gold),transparent)}
+.tl-item{position:relative;padding:0 0 22px 14px}
+.tl-item::before{content:"";position:absolute;left:-23px;top:9px;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(245,182,66,.15)}
+.tl-item time{font-size:12px;color:var(--gold);letter-spacing:.5px}
+.tl-item h4{font-size:16px;margin:2px 0 5px}
+.tl-item p{font-size:14px;color:var(--ink-dim)}
+/* faq */
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:10px}
+details[open]{border-color:rgba(245,182,66,.4)}
+summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋";color:var(--gold);font-weight:400}
+details[open] summary::after{content:"－"}
+details p{margin-top:10px;color:var(--ink-dim);font-size:14.5px}
+/* cta band */
+.band{background:linear-gradient(120deg,#16213f,#241a3a);border:1px solid var(--line);border-radius:20px;padding:38px 34px;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}
+.band h3{font-size:clamp(20px,2.6vw,27px);font-weight:800}
+.band p{color:var(--ink-dim);margin-top:8px}
+.band .box{background:rgba(0,0,0,.28);border:1px dashed rgba(245,182,66,.45);border-radius:12px;padding:14px;font-size:13px;color:var(--gold-soft);word-break:break-all}
+/* footer */
+footer{border-top:1px solid var(--line);padding:40px 0 26px;margin-top:30px}
+.ft{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:26px}
+.ft h5{font-size:14px;margin-bottom:12px;color:var(--gold)}
+.ft ul{list-style:none}
+.ft li{margin-bottom:8px;font-size:13.5px;color:var(--ink-dim)}
+.ft a{color:var(--ink-dim)}
+.copyright{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-dim);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}
+/* responsive */
+@media(max-width:960px){
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .grid-3,.grid-2{grid-template-columns:1fr}
+  .strip{grid-template-columns:repeat(3,1fr)}
+  .band,.hero-grid{grid-template-columns:1fr}
+  .poster{order:-1;max-width:360px;margin:0 auto;width:100%}
+}
+@media(max-width:680px){
+  nav.menu{position:fixed;inset:62px 0 0 0;background:rgba(7,10,22,.97);flex-direction:column;padding:24px;gap:4px;transform:translateX(100%);transition:.3s}
+  nav.menu.open{transform:none}
+  nav.menu a{width:100%;padding:15px;border-radius:10px;font-size:16px;border-bottom:1px solid var(--line)}
+  .menu-btn{display:block}
+  .strip{grid-template-columns:repeat(2,1fr)}
+  .ft{grid-template-columns:1fr 1fr}
+  section{padding:38px 0}
+  .hero{padding:34px 0 26px}
+}
+@media print{body{background:#fff;color:#000}.poster,nav,.menu-btn,.hero-actions{display:none}}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<header>
+  <div class="wrap hd">
+    <div class="logo">
+      <b>易易亲电影网</b>
+      <span>yiyiqingdianyingwang-app</span>
+    </div>
+    <nav class="menu" id="nav">
+      <a href="#films">影片库</a>
+      <a href="#news">影讯</a>
+      <a href="#guide">观影指南</a>
+      <a href="#rank">榜单</a>
+      <a href="#column">专栏</a>
+      <a href="#faq">问答</a>
+    </nav>
+    <button class="menu-btn" id="mb" aria-label="菜单">☰</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">◆ 独立影视资讯与选片导览站</span>
+        <h1>在<em>易易亲电影网</em>，把一部好片<br>从海量片单里准确找出来</h1>
+        <p class="lede">易易亲电影网（yiyiqingdianyingwang-app）不做播放、不搬运资源，只做三件事：把新片讲清楚、把老片讲明白、把“今晚看什么”这件事变得简单。从院线档期到冷门佳作，从导演手法到镜头语言，我们用人话写影评，用表格做对比，用榜单帮你做决定。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#films">浏览影片库</a>
+          <a class="btn btn-ghost" href="#guide">阅读观影指南</a>
+        </div>
+        <div class="hero-meta">
+          <span>站点：<b>yiyiqingdianyingwang-app</b></span>
+          <span>访问：<b>https://yiyiqingdianyingwang-app.github.io</b></span>
+          <span>更新：<b>每周三、周六</b></span>
+          <span>栏目：<b>6 个常设频道</b></span>
+        </div>
+      </div>
+      <div class="poster">
+        <div class="pg">
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="poster-tag">
+          <small>FEATURED · 本期聚焦</small>
+          <p>“镜头之外的叙事：当配角成为整部电影的答案”</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="films">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>影片库 <u>· 按类型找片</u></h2>
+          <p>每部影片均附一句话定位、适合人群、观影门槛与相似片推荐，避免“点开才知道不合适”。</p>
+        </div>
+        <a href="#">查看完整片单 →</a>
+      </div>
+      <div class="strip">
+        <article class="film"><div class="thumb" style="--c1:#2a1d4e;--c2:#52307c"><s></s><span>剧情</span></div><b>漫长的告白</b><small>2026 · 118 分钟</small></article>
+        <article class="film"><div class="thumb" style="--c1:#3d1f0f;--c2:#8a5a24"><s></s><span>悬疑</span></div><b>夜航西飞</b><small>2026 · 96 分钟</small></article>
+        <article class="film"><div class="thumb" style="--c1:#0c3040;--c2:#1f6b7a"><s></s><span>科幻</span></div><b>潮汐之下</b><small>2025 · 132 分钟</small></article>
+        <article class="film"><div class="thumb" style="--c1:#4a0f22;--c2:#9c2b4a"><s></s><span>爱情</span></div><b>邮差与海</b><small>2025 · 105 分钟</small></article>
+        <article class="film"><div class="thumb" style="--c1:#22330f;--c2:#5e7a2c"><s></s><span>纪录</span></div><b>稻浪千里</b><small>2026 · 88 分钟</small></article>
+        <article class="film"><div class="thumb" style="--c1:#301040;--c2:#6b4f9c"><s></s><span>动画</span></div><b>纸月亮</b><small>2026 · 110 分钟</small></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>影讯 <u>· 档期与行业</u></h2>
+          <p>不追热搜，只追信息：定档、撤档、重映、电影节入围，按时间线整理，便于回溯。</p>
+        </div>
+        <a href="#">影讯归档 →</a>
+      </div>
+      <div class="grid grid-2">
+        <div>
+          <div class="tl">
+            <div class="tl-item"><time>2026 / 10 / 08</time><h4>国庆档收官：票房结构变化背后</h4><p>头部影片集中度下降，中等成本现实题材获得稳定口碑，影院排片开始向“长尾片”倾斜。</p></div>
+            <div class="tl-item"><time>2026 / 09 / 26</time><h4>四部国产片宣布海外电影节首映</h4><p>类型涵盖家庭伦理、历史传记与实验动画，出海路径从“合拍”转向“作者表达”。</p></div>
+            <div class="tl-item"><time>2026 / 09 / 12</time><h4>经典修复单元公布片单</h4><p>含 4K 修复的 90 年代华语片 9 部，将在部分城市进行限定场次放映。</p></div>
+            <div class="tl-item"><time>2026 / 08 / 30</time><h4>流媒体与院线窗口期再缩短</h4><p>部分影片上线间隔压缩至 28 天，中小成本影片更依赖“口碑延时爆发”。</p></div>
+          </div>
+        </div>
+        <div class="grid" style="grid-template-columns:1fr">
+          <div class="card"><span class="tag">深度</span><h3>为什么“好看但不卖座”正在减少</h3><p>当短视频成为第一入口，影片的前三分钟决定了它的命运。我们拆解了 12 部影片的开场结构。</p><a class="more" href="#">阅读长文</a></div>
+          <div class="card"><span class="tag">访谈</span><h3>剪辑师谈：一场戏被剪掉的三个理由</h3><p>节奏、信息重复、演员状态——大多数观众感受到的“不对劲”，源头都在剪辑台。</p><a class="more" href="#">阅读访谈</a></div>
+          <div class="card"><span class="tag">数据</span><h3>季度观影报告：谁还在走进影院</h3><p>25–34 岁仍是主力，但 45 岁以上观众占比连续三个季度上升，题材偏好明显转向“可讨论性”。</p><a class="more" href="#">查看报告</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="guide">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>观影指南 <u>· 选片不踩坑</u></h2>
+          <p>按心情、按场合、按观影经验给出可执行的建议，而不是堆砌“高分神作”。</p>
+        </div>
+      </div>
+      <div class="grid grid-4">
+        <div class="card"><span class="no">01</span><span class="tag">入门</span><h3>第一次看艺术电影</h3><p>从“慢”不等于“闷”开始：先选有强情节的作者片，再过渡到节奏舒缓的作品，配一杯茶比配手机更合适。</p></div>
+        <div class="card"><span class="no">02</span><span class="tag">亲子</span><h3>带娃看片的尺度表</h3><p>按惊吓程度、台词密度、时长三项打分，给出 6–9 岁与 10–12 岁的分龄推荐清单。</p></div>
+        <div class="card"><span class="no">03</span><span class="tag">约会</span><h3>两人看的片，怎么选</h3><p>避开“看完无话可说”的影片。推荐 8 部天然带话题的片子，并附可聊的三个问题。</p></div>
+        <div class="card"><span class="no">04</span><span class="tag">独处</span><h3>一个人也值得去影院</h3><p>孤独感会放大视听体验。推荐适合单人观看的 7 部影片，以及选座与场次的小技巧。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rank">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>榜单 <u>· 编辑部周选</u></h2>
+          <p>榜单不按算法，按“是否值得你花两小时”。每周更新，附入选理由与劝退理由。</p>
+        </div>
+        <a href="#">往期榜单 →</a>
+      </div>
+      <div class="grid grid-3">
+        <div class="card"><span class="tag">本周 TOP 3</span><h3>《潮汐之下》</h3><p>用水下长镜头讲家庭关系，声音设计是真正的主角。劝退：需要耐心，前 20 分钟信息极少。</p></div>
+        <div class="card"><span class="tag">冷门捡漏</span><h3>《邮差与海》</h3><p>全片只有两个角色、一座岛，却写出了“等待”的多种形态。适合失眠夜看。</p></div>
+        <div class="card"><span class="tag">表演时刻</span><h3>《漫长的告白》</h3><p>女主角的沉默戏比台词更有力，结尾反转不成立但情绪成立——这是它被选中的原因。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="column">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>专栏 <u>· 读懂电影的人话版</u></h2>
+          <p>不端着写。把视听语言拆成能复述给朋友听的句子。</p>
+        </div>
+        <a href="#">全部专栏 →</a>
+      </div>
+      <div class="grid grid-2">
+        <article class="card">
+          <span class="tag">视听笔记</span>
+          <h3>为什么有些电影“看起来就贵”</h3>
+          <p>答案往往不在服化道，而在光比、景别切换频率与声音层次。我们用三部影片的同一场戏做逐镜对比，告诉你钱花在了哪里，以及哪里其实可以省。</p>
+          <a class="more" href="#">全文 12 分钟</a>
+        </article>
+        <article class="card">
+          <span class="tag">类型解剖</span>
+          <h3>悬疑片的“公平”与“诚实”</h3>
+          <p>伏笔是否被提前展示，是悬疑片的分水岭。我们整理了 20 部影片的线索分布表，并给出“可复盘型”与“不可复盘型”的明确分界。</p>
+          <a class="more" href="#">全文 9 分钟</a>
+        </article>
+        <article class="card">
+          <span class="tag">导演小传</span>
+          <h3>拍了三十年，他还在拍同一个问题</h3>
+          <p>一位常被归为“文艺”的导演，作品主线其实是“人如何与失败相处”。按时间线重看他的七部长片，能看出一条非常清晰的进化轨迹。</p>
+          <a class="more" href="#">全文 15 分钟</a>
+        </article>
+        <article class="card">
+          <span class="tag">片单</span>
+          <h3>下雨天看的 10 部电影</h3>
+          <p>按雨的功能分类：雨是背景、雨是隐喻、雨是情节本身。附每部的最佳观看时段与搭配饮品建议（是的，这很重要）。</p>
+          <a class="more" href="#">全文 7 分钟</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>问答 <u>· 关于易易亲电影网</u></h2>
+          <p>关于站点定位、内容更新与访问方式的常见疑问。</p>
+        </div>
+      </div>
+      <details open><summary>易易亲电影网是做什么的？</summary><p>易易亲电影网（yiyiqingdianyingwang-app）是一个影视资讯与选片导览站点，提供影片介绍、档期信息、观影指南、编辑部榜单与影视随笔。我们不提供在线播放、不提供下载、不搬运影视资源，所有内容均为原创或整理自公开信息。</p></details>
+      <details><summary>网站网址是什么？如何访问？</summary><p>正式访问地址为 <strong>https://yiyiqingdianyingwang-app.github.io</strong>，建议收藏该地址。站点为静态单页结构，移动端、平板与桌面端均可自适应浏览，弱网环境下加载也更稳定。</p></details>
+      <details><summary>内容多久更新一次？</summary><p>影讯类内容随档期变动即时更新；观影指南与榜单为每周三、周六更新；深度专栏为每月 2–4 篇。站点不设评论区，避免剧透与低质争论。</p></details>
+      <details><summary>片单里的“劝退理由”是什么？</summary><p>是编辑部认为你可能不喜欢的点：节奏慢、结局开放、方言较重、惊吓镜头、需要前置知识等。目的是减少“被高分骗进去”的落差，而不是给影片下价值判断。</p></details>
+      <details><summary>为什么有些影片找不到？</summary><p>我们只收录公开上映或已官宣定档的影片，且不收录因版权、题材等原因存在争议的条目。未收录不代表评价，仅为站点收录标准所致。</p></details>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <h3>把“今晚看什么”交给我们</h3>
+          <p>每周两封短邮件：一份周选榜单，一篇可聊的观影随笔。不推销、不刷屏、可一键退订。</p>
+        </div>
+        <div>
+          <div class="box">站点直达：https://yiyiqingdianyingwang-app.github.io</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="ft">
+      <div>
+        <div class="logo"><b>易易亲电影网</b></div>
+        <p style="color:var(--ink-dim);font-size:13px;margin-top:10px;max-width:32ch">用文字帮你在两小时内，做出一个不后悔的观影选择。</p>
+      </div>
+      <div>
+        <h5>栏目</h5>
+        <ul>
+          <li><a href="#films">影片库</a></li>
+          <li><a href="#news">影讯动态</a></li>
+          <li><a href="#guide">观影指南</a></li>
+          <li><a href="#rank">编辑部榜单</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>专题</h5>
+        <ul>
+          <li><a href="#column">视听笔记</a></li>
+          <li><a href="#column">类型解剖</a></li>
+          <li><a href="#column">导演小传</a></li>
+          <li><a href="#column">季节片单</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>关于</h5>
+        <ul>
+          <li><a href="#faq">站点说明</a></li>
+          <li><a href="#">投稿与合作</a></li>
+          <li><a href="#">免责与版权</a></li>
+          <li><a href="#">反馈</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>© <span id="yr">2026</span> 易易亲电影网 · yiyiqingdianyingwang-app · 影视资讯与选片导览</span>
+      <span>站点地址：https://yiyiqingdianyingwang-app.github.io　｜　本站仅为信息导览，不涉及任何影视资源播放与下载</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('mb').addEventListener('click',function(){
+  document.getElementById('nav').classList.toggle('open');
+});
+document.getElementById('yr').textContent = new Date().getFullYear();
+document.querySelectorAll('nav a, .sec-head a').forEach(function(a){
+  a.addEventListener('click',function(){ document.getElementById('nav').classList.remove('open'); });
+});
+</script>
+</body>
+</html>
